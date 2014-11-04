@@ -287,6 +287,7 @@ in rec {
   tests.runInMachine = callTest tests/run-in-machine.nix {};
   tests.sddm = callTest tests/sddm.nix {};
   tests.simple = callTest tests/simple.nix {};
+  tests.storage = callTest tests/storage.nix {};
   tests.tomcat = callTest tests/tomcat.nix {};
   tests.udisks2 = callTest tests/udisks2.nix {};
   tests.virtualbox = hydraJob (import tests/virtualbox.nix { system = "x86_64-linux"; });
