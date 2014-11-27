@@ -28,10 +28,10 @@ index 237661f..48bc33f 100644
  		NULL
  	};
  	const char **path = dhcpcd_paths;
-diff --git a/src/nm-device.c b/src/nm-device.c
+diff --git a/src/devices/nm-device.c b/src/devices/nm-device.c
 index 1dc94ee..e60f3c8 100644
---- a/src/nm-device.c
-+++ b/src/nm-device.c
+--- a/src/devices/nm-device.c
++++ b/src/devices/nm-device.c
 @@ -1321,8 +1321,7 @@ aipd_start (NMDevice *self, NMDeviceStateReason *reason)
  	char *argv[6], *cmdline;
  	const char **aipd_binary = NULL;
@@ -55,17 +55,6 @@ diff --git a/src/ppp-manager/nm-ppp-manager.c b/src/ppp-manager/nm-ppp-manager.c
 index 59698c3..7dba0f7 100644
 --- a/src/ppp-manager/nm-ppp-manager.c
 +++ b/src/ppp-manager/nm-ppp-manager.c
-@@ -661,9 +661,7 @@ static inline const char *
- nm_find_pppd (void)
- {
- 	static const char *pppd_binary_paths[] = {
--		"/usr/local/sbin/pppd",
--		"/usr/sbin/pppd",
--		"/sbin/pppd",
-+		"@ppp@/sbin/pppd",
- 		NULL
- 	};
- 
 @@ -988,7 +986,7 @@ nm_ppp_manager_start (NMPPPManager *manager,
  
  	/* Make sure /dev/ppp exists (bgo #533064) */

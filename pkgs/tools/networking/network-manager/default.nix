@@ -1,15 +1,15 @@
 { stdenv, fetchurl, intltool, wirelesstools, pkgconfig, dbus_glib, xz
 , udev, libnl, libuuid, polkit, gnutls, ppp, dhcp, dhcpcd, iptables
-, libgcrypt, dnsmasq, avahi, bind, perl, bluez5, substituteAll
-, gobjectIntrospection, modemmanager, openresolv }:
+, libgcrypt, dnsmasq, avahi, bind, perl, bluez5, substituteAll, newt
+, gobjectIntrospection, modemmanager, openresolv, readline, libndp }:
 
 stdenv.mkDerivation rec {
   name = "network-manager-${version}";
-  version = "0.9.8.10";
+  version = "0.9.10.0";
 
   src = fetchurl {
     url = "mirror://gnome/sources/NetworkManager/0.9/NetworkManager-${version}.tar.xz";
-    sha256 = "0wn9qh8r56r8l19dqr68pdl1rv3zg1dv47rfy6fqa91q7li2fk86";
+    sha256 = "0zj8z6bidwqkxbcsjnp76g22wfri809ii082ah1g9m04pd387a36";
   };
 
   preConfigure = ''
@@ -25,6 +25,7 @@ stdenv.mkDerivation rec {
     # Upstream prefers dhclient, so don't add dhcpcd to the closure
     #"--with-dhcpcd=${dhcpcd}/sbin/dhcpcd"
     "--with-dhcpcd=no"
+    "--with-nmtui=yes"
     "--with-iptables=${iptables}/sbin/iptables"
     "--with-udev-dir=\${out}/lib/udev"
     "--with-resolvconf=${openresolv}/sbin/resolvconf"
@@ -37,9 +38,10 @@ stdenv.mkDerivation rec {
     "--with-modem-manager-1"
   ];
 
-  buildInputs = [ wirelesstools udev libnl libuuid polkit ppp xz bluez5 gobjectIntrospection modemmanager ];
+  buildInputs = [ wirelesstools udev libnl libuuid polkit ppp xz bluez5
+                  gobjectIntrospection modemmanager libndp newt ];
 
-  propagatedBuildInputs = [ dbus_glib gnutls libgcrypt ];
+  propagatedBuildInputs = [ dbus_glib gnutls libgcrypt readline ];
 
   nativeBuildInputs = [ intltool pkgconfig ];
 
@@ -49,7 +51,7 @@ stdenv.mkDerivation rec {
         inherit avahi dnsmasq ppp bind;
         glibc = stdenv.gcc.libc;
       })
-      ./libnl-3.2.25.patch
+     ./hide-unmanaged.patch
     ];
 
   preInstall =
