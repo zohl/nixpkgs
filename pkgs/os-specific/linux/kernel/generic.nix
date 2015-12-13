@@ -90,11 +90,19 @@ let
       cd $buildRoot
 
       # Get a basic config file for later refinement with $generateConfig.
-      make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch
+      ${ if features.chromiumos or false then ''
+           pushd ../$sourceRoot
+           patchShebangs ./chromeos/scripts
+           ./chromeos/scripts/prepareconfig ${stdenv.platform.chromiumOSFlavour}
+           popd
+           cp ../$sourceRoot/.config ./
+         '' else ''
+           make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch'' }
 
       # Create the config file.
       echo "generating kernel configuration..."
       echo "$kernelConfig" > kernel-config
+      ls  -l .config
       DEBUG=1 ARCH=$arch KERNEL_CONFIG=kernel-config AUTO_MODULES=$autoModules \
            SRC=../$sourceRoot perl -w $generateConfig
     '';

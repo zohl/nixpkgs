@@ -423,4 +423,8 @@ rec {
     };
   };
 
+  chromebook-x86_64 = pc64 // {
+    chromiumOSFlavour = "chromiumos-x86_64";
+  };
+
 }

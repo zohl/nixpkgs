@@ -499,6 +499,11 @@ with stdenv.lib;
   # Disable the firmware helper fallback, udev doesn't implement it any more
   FW_LOADER_USER_HELPER_FALLBACK? n
 
+  # ChromiumOS support
+  ${optionalString ((versionAtLeast version "3.18") && (features.chromiumos or false)) ''
+    ALLOW_DEV_COREDUMP? n
+  ''}
+
   ${kernelPlatform.kernelExtraConfig or ""}
   ${extraConfig}
 ''
