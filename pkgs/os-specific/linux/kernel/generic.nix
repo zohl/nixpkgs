@@ -90,14 +90,17 @@ let
       cd $buildRoot
 
       # Get a basic config file for later refinement with $generateConfig.
-      ${ if features.chromiumos or false then ''
-           pushd ../$sourceRoot
-           patchShebangs ./chromeos/scripts
-           ./chromeos/scripts/prepareconfig ${stdenv.platform.chromiumOSFlavour}
-           popd
-           cp ../$sourceRoot/.config ./
-         '' else ''
-           make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch'' }
+      ${if features.chromiumos or false then ''
+        pushd ../$sourceRoot
+        patchShebangs chromeos/scripts
+        chromeos/scripts/prepareconfig ${stdenv.platform.chromiumOSFlavour}
+        popd
+        cp ../$sourceRoot/.config ./
+        # Google supplies broken config. This fails, but fixes it!
+        yes "" | make -C ../$sourceRoot O=$PWD oldconfig ARCH=$arch || true
+      '' else ''
+        make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch
+      ''}
 
       # Create the config file.
       echo "generating kernel configuration..."

@@ -10039,6 +10039,8 @@ let
 
   linux_chromiumos_3_18 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.18.nix {};
 
+  linux_chromiumos_latest = linux_chromiumos_3_18;
+
   /* grsec configuration
 
      We build several flavors of 'default' grsec kernels. These are
