@@ -1,4 +1,4 @@
-{ stdenv, perl, buildLinux
+{ stdenv, perl, buildLinux, ncurses
 
 , # The kernel source tarball.
   src
@@ -86,6 +86,8 @@ let
 
     inherit (kernel) src patches preUnpack;
 
+    buildInputs = [ncurses];
+
     buildPhase = ''
       cd $buildRoot
 
@@ -117,7 +119,6 @@ let
 
   kernel = buildLinux {
     inherit version modDirVersion src kernelPatches;
-
     configfile = configfile.nativeDrv or configfile;
 
     crossConfigfile = configfile.crossDrv or configfile;
