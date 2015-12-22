@@ -1,4 +1,4 @@
-{ stdenv, perl, buildLinux, ncurses
+{ stdenv, perl, buildLinux
 
 , # The kernel source tarball.
   src
@@ -86,8 +86,6 @@ let
 
     inherit (kernel) src patches preUnpack;
 
-    buildInputs = [ncurses];
-
     buildPhase = ''
       cd $buildRoot
 
@@ -96,6 +94,9 @@ let
         pushd ../$sourceRoot
         patchShebangs chromeos/scripts
         chromeos/scripts/prepareconfig ${stdenv.platform.chromiumOSFlavour}
+        make oldconfig
+        # TODO fix it
+	sed -i '/SND_HDA_I915/d' .config 
         popd
         cp ../$sourceRoot/.config ./
         # Google supplies broken config. This fails, but fixes it!

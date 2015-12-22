@@ -144,7 +144,7 @@ with stdenv.lib;
   # Video configuration.
   # Enable KMS for devices whose X.org driver supports it.
   ${optionalString (versionOlder version "4.3") ''
-    DRM_I915_KMS y
+    DRM_I915_KMS? y
   ''}
   # Allow specifying custom EDID on the kernel command line
   DRM_LOAD_EDID_FIRMWARE y
@@ -203,31 +203,31 @@ with stdenv.lib;
   ${optionalString (versionAtLeast version "4.0") ''
     NFSD_PNFS y
   ''}
-  NFSD_V2_ACL y
-  NFSD_V3 y
-  NFSD_V3_ACL y
-  NFSD_V4 y
+  NFSD_V2_ACL? y
+  NFSD_V3? y
+  NFSD_V3_ACL? y
+  NFSD_V4? y
   ${optionalString (versionAtLeast version "3.11") ''
-    NFSD_V4_SECURITY_LABEL y
+    NFSD_V4_SECURITY_LABEL? y
   ''}
-  NFS_FSCACHE y
+  NFS_FSCACHE? y
   ${optionalString (versionAtLeast version "3.6") ''
-    NFS_SWAP y
+    NFS_SWAP? y
   ''}
-  NFS_V3_ACL y
+  NFS_V3_ACL? y
   ${optionalString (versionAtLeast version "3.11") ''
-    NFS_V4_1 y  # NFSv4.1 client support
-    NFS_V4_2 y
-    NFS_V4_SECURITY_LABEL y
+    NFS_V4_1? y  # NFSv4.1 client support
+    NFS_V4_2? y
+    NFS_V4_SECURITY_LABEL? y
   ''}
-  CIFS_XATTR y
-  CIFS_POSIX y
-  CIFS_FSCACHE y
+  CIFS_XATTR? y
+  CIFS_POSIX? y
+  CIFS_FSCACHE? y
   ${optionalString (versionAtLeast version "3.12") ''
-    CEPH_FSCACHE y
+    CEPH_FSCACHE? y
   ''}
   ${optionalString (versionAtLeast version "3.14") ''
-    CEPH_FS_POSIX_ACL y
+    CEPH_FS_POSIX_ACL? y
   ''}
   ${optionalString (versionAtLeast version "3.13") ''
     SQUASHFS_FILE_DIRECT y
@@ -243,7 +243,7 @@ with stdenv.lib;
 
   # Security related features.
   STRICT_DEVMEM y # Filter access to /dev/mem
-  SECURITY_SELINUX_BOOTPARAM_VALUE 0 # Disable SELinux by default
+  SECURITY_SELINUX_BOOTPARAM_VALUE? 0 # Disable SELinux by default
   ${optionalString (!(features.grsecurity or false)) ''
     DEVKMEM n # Disable /dev/kmem
   ''}
@@ -285,7 +285,7 @@ with stdenv.lib;
   BLK_DEV_CMD640_ENHANCED y # CMD640 enhanced support
   BLK_DEV_IDEACPI y # IDE ACPI support
   BLK_DEV_INTEGRITY y
-  BSD_PROCESS_ACCT_V3 y
+  BSD_PROCESS_ACCT_V3? y
   BT_HCIUART_BCSP? y
   BT_HCIUART_H4? y # UART (H4) protocol support
   BT_HCIUART_LL? y
@@ -355,8 +355,8 @@ with stdenv.lib;
   RT_GROUP_SCHED? y
   CGROUP_DEVICE? y
   ${if versionAtLeast version "3.6" then ''
-    MEMCG y
-    MEMCG_SWAP y
+    MEMCG? y
+    MEMCG_SWAP? y
   '' else ''
     CGROUP_MEM_RES_CTLR y
     CGROUP_MEM_RES_CTLR_SWAP y
@@ -392,7 +392,7 @@ with stdenv.lib;
 
   # Easier debugging of NFS issues.
   ${optionalString (versionAtLeast version "3.4") ''
-    SUNRPC_DEBUG y
+    SUNRPC_DEBUG? y
   ''}
 
   # Virtualisation.
@@ -452,7 +452,7 @@ with stdenv.lib;
     HIGHMEM64G? y # We need 64 GB (PAE) support for Xen guest support.
   ''}
   ${optionalString (versionAtLeast version "3.9" && stdenv.is64bit) ''
-    VFIO_PCI_VGA y
+    VFIO_PCI_VGA? y
   ''}
   VIRT_DRIVERS y
 
@@ -501,7 +501,10 @@ with stdenv.lib;
 
   # ChromiumOS support
   ${optionalString ((versionAtLeast version "3.18") && (features.chromiumos or false)) ''
-    ALLOW_DEV_COREDUMP? n
+    MEMCG n
+    DRM_PANEL_LD9040 n
+    DRM_PANEL_S6E8AA0 n
+    DRM_PANEL_JDI_LPM102A188A n
   ''}
 
   ${kernelPlatform.kernelExtraConfig or ""}

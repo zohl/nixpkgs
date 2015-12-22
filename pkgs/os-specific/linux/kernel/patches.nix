@@ -103,4 +103,14 @@ rec {
       patch = ./crc-regression.patch;
     };
 
+  chromiumos_kconfig =
+    { name = "chromium_kconfig";
+      patch = ./chromiumos-patches/chromiumos-kconfig.patch;
+    };
+
+  chromiumos_genksyms =
+    { name = "chromium_genksyms";
+      patch = ./chromiumos-patches/chromiumos-genksyms.patch;
+    };
+
 }

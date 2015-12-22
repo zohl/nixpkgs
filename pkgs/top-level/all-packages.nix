@@ -10037,7 +10037,9 @@ let
       ];
   };
 
-  linux_chromiumos_3_18 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.18.nix {};
+  linux_chromiumos_3_18 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.18.nix {
+    kernelPatches = [ kernelPatches.chromiumos_kconfig kernelPatches.chromiumos_genksyms ];
+  };
 
   linux_chromiumos_latest = linux_chromiumos_3_18;
 
