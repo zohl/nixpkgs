@@ -155,10 +155,10 @@ with stdenv.lib;
   VGA_SWITCHEROO y
 
   # Sound.
-  SND_DYNAMIC_MINORS y
-  SND_AC97_POWER_SAVE y # AC97 Power-Saving Mode
-  SND_HDA_INPUT_BEEP y # Support digital beep via input layer
-  SND_USB_CAIAQ_INPUT y
+  SND_DYNAMIC_MINORS? y
+  SND_AC97_POWER_SAVE? y # AC97 Power-Saving Mode
+  SND_HDA_INPUT_BEEP? y # Support digital beep via input layer
+  SND_USB_CAIAQ_INPUT? y
   PSS_MIXER y # Enable PSS mixer (Beethoven ADSP-16 and other compatible)
 
   # USB serial devices.
@@ -505,6 +505,8 @@ with stdenv.lib;
     DRM_PANEL_LD9040 n
     DRM_PANEL_S6E8AA0 n
     DRM_PANEL_JDI_LPM102A188A n
+    VGA_SWITCHEROO n
+    SND n
   ''}
 
   ${kernelPlatform.kernelExtraConfig or ""}
