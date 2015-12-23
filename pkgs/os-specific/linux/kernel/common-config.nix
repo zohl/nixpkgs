@@ -506,7 +506,9 @@ with stdenv.lib;
     DRM_PANEL_S6E8AA0 n
     DRM_PANEL_JDI_LPM102A188A n
     VGA_SWITCHEROO n
-    SND n
+    IPV6_VTI n
+    TEST_RHASHTABLE n
+    I2C_HID n
   ''}
 
   ${kernelPlatform.kernelExtraConfig or ""}
