@@ -90,7 +90,7 @@ let
       cd $buildRoot
 
       # Get a basic config file for later refinement with $generateConfig.
-      ${if features.chromiumos or false then ''
+      ${if false && (features.chromiumos or false) then ''
         pushd ../$sourceRoot
         patchShebangs chromeos/scripts
         chromeos/scripts/prepareconfig ${stdenv.platform.chromiumOSFlavour}

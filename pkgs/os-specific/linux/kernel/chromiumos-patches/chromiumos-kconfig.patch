@@ -33,3 +33,16 @@ index 48398b4..0e37f7d 100644
  config DEBUG_DRIVER
  	bool "Driver Core verbose debug messages"
  	depends on DEBUG_KERNEL
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 58154a9..53a0d73 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -81,7 +81,7 @@ config MFD_AXP20X
+ 
+ config MFD_CROS_EC
+ 	tristate "Support ChromeOS Embedded Controller"
+-	depends on MFD_CORE
++	select MFD_CORE
+ 	help
+ 	  If you say Y here you get support for the ChromeOS Embedded
+ 	  Controller (EC) providing keyboard, battery and power services.

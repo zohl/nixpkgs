@@ -1,7 +1,7 @@
 { stdenv, fetchgit, perl, buildLinux, ncurses, ... } @ args:
 
 import ./generic.nix (args // rec {
-  version = "3.18";
+  version = "3.18.0";
 
   src = fetchgit {
     url = "https://chromium.googlesource.com/chromiumos/third_party/kernel";
