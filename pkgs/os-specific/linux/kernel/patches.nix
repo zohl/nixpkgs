@@ -103,14 +103,19 @@ rec {
       patch = ./crc-regression.patch;
     };
 
+  genksyms_fix_segfault =
+    { name = "genksyms-fix-segfault";
+      patch = ./genksyms-fix-segfault.patch;
+    };
+
   chromiumos_kconfig =
     { name = "chromium_kconfig";
       patch = ./chromiumos-patches/chromiumos-kconfig.patch;
     };
 
-  chromiumos_genksyms =
-    { name = "chromium_genksyms";
-      patch = ./chromiumos-patches/chromiumos-genksyms.patch;
+  chromiumos_no_link_restrictions =
+    { name = "chromium-no-link-restrictions";
+      patch = ./chromiumos-patches/no-link-restrictions.patch;
     };
 
 }
