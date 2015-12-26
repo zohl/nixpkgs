@@ -518,13 +518,13 @@ with stdenv.lib;
     MFD_CROS_EC_LPC y
     MFD_CROS_EC_DEV y
     CHARGER_CROS_USB_PD y
-    DM_VERITY y
+    I2C y
     BLK_DEV_DM y
-    OF_IRQ y
-    AGP y
-    DRM y
-    DRM_VGEM y
-    CPU_FREQ_GOV_INTERACTIVE y
+    # ChromeOS specific
+    ANDROID_PARANOID_NETWORK n
+    DM_VERITY n
+    DRM_VGEM n
+    CPU_FREQ_GOV_INTERACTIVE n
     # ARM only
     CPUFREQ_DT n
     EXTCON_CROS_EC n

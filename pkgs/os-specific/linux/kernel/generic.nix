@@ -90,25 +90,11 @@ let
       cd $buildRoot
 
       # Get a basic config file for later refinement with $generateConfig.
-      ${if false && (features.chromiumos or false) then ''
-        pushd ../$sourceRoot
-        patchShebangs chromeos/scripts
-        chromeos/scripts/prepareconfig ${stdenv.platform.chromiumOSFlavour}
-        make oldconfig
-        # TODO fix it
-	sed -i '/SND_HDA_I915/d' .config 
-        popd
-        cp ../$sourceRoot/.config ./
-        # Google supplies broken config. This fails, but fixes it!
-        yes "" | make -C ../$sourceRoot O=$PWD oldconfig ARCH=$arch || true
-      '' else ''
-        make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch
-      ''}
+      make -C ../$sourceRoot O=$PWD $kernelBaseConfig ARCH=$arch
 
       # Create the config file.
       echo "generating kernel configuration..."
       echo "$kernelConfig" > kernel-config
-      ls  -l .config
       DEBUG=1 ARCH=$arch KERNEL_CONFIG=kernel-config AUTO_MODULES=$autoModules \
            SRC=../$sourceRoot perl -w $generateConfig
     '';
@@ -120,6 +106,7 @@ let
 
   kernel = buildLinux {
     inherit version modDirVersion src kernelPatches;
+
     configfile = configfile.nativeDrv or configfile;
 
     crossConfigfile = configfile.crossDrv or configfile;
