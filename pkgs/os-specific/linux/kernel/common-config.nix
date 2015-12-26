@@ -143,8 +143,8 @@ with stdenv.lib;
 
   # Video configuration.
   # Enable KMS for devices whose X.org driver supports it.
-  ${optionalString (versionOlder version "4.3") ''
-    DRM_I915_KMS? y
+  ${optionalString (versionOlder version "4.3" && !(features.chromiumos or false)) ''
+    DRM_I915_KMS y
   ''}
   # Allow specifying custom EDID on the kernel command line
   DRM_LOAD_EDID_FIRMWARE y
@@ -500,7 +500,7 @@ with stdenv.lib;
   FW_LOADER_USER_HELPER_FALLBACK? n
 
   # ChromiumOS support
-  ${optionalString ((versionAtLeast version "3.18") && (features.chromiumos or false)) ''
+  ${optionalString (features.chromiumos or false) ''
     # Fail with compile errors
     TEST_RHASHTABLE n
     VGA_SWITCHEROO n
