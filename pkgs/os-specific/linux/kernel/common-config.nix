@@ -501,6 +501,8 @@ with stdenv.lib;
 
   # ChromiumOS support
   ${optionalString (features.chromiumos or false) ''
+    CHROME_PLATFORMS y
+    CHROMEOS_OF_FIRMWARE y
     # Fail with compile errors
     TEST_RHASHTABLE n
     VGA_SWITCHEROO n
