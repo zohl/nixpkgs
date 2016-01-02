@@ -1,6 +1,6 @@
-{stdenv, git, cacert}: let
+{ stdenv, lib, git, cacert, openssh }: let
   urlToName = url: rev: let
-    base = baseNameOf (stdenv.lib.removeSuffix "/" url);
+    base = baseNameOf (lib.removeSuffix "/" url);
 
     matched = builtins.match "(.*).git" base;
 
@@ -42,11 +42,13 @@ in
 assert md5 != "" || sha256 != "";
 assert deepClone -> leaveDotGit;
 
-stdenv.mkDerivation {
+let
+  isSsh = lib.hasPrefix "ssh:" url;
+in stdenv.mkDerivation {
   inherit name;
   builder = ./builder.sh;
   fetcher = "${./nix-prefetch-git}";  # This must be a string to ensure it's called with bash.
-  buildInputs = [git];
+  buildInputs = [ git ] ++ lib.optional isSsh openssh;
 
   outputHashAlgo = if sha256 == "" then "md5" else "sha256";
   outputHashMode = "recursive";
