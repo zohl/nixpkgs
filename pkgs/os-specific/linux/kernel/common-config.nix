@@ -502,25 +502,29 @@ with stdenv.lib;
   # ChromiumOS support
   ${optionalString (features.chromiumos or false) ''
     CHROME_PLATFORMS y
-    CHROMEOS_OF_FIRMWARE y
+    CHROMEOS_OF_FIRMWARE? y #3.14
     # Fail with compile errors
-    TEST_RHASHTABLE n
+    TEST_RHASHTABLE? n #3.14
     VGA_SWITCHEROO n
     MMC_SDHCI_PXAV2 n
+    NET_IPVTI n
     IPV6_VTI n
-    BCMDHD n
+    BCMDHD? n #3.14
     REGULATOR_FIXED_VOLTAGE n
     TPS6105X n
-    TRUSTY n
+    TRUSTY? n #3.14
     # Undefined references in kernel
     CPU_FREQ_STAT y
     IPV6 y
+    MALI_MIDGARD? n # a 3.14
     # Undefined references in modules
     MFD_CROS_EC y
     MFD_CROS_EC_LPC y
     MFD_CROS_EC_DEV y
     CHARGER_CROS_USB_PD y
     I2C y
+    MEDIA_SUBDRV_AUTOSELECT n
+    VIDEO_IR_I2C n
     BLK_DEV_DM y
     # ChromeOS specific
     ANDROID_PARANOID_NETWORK n
@@ -528,13 +532,42 @@ with stdenv.lib;
     DRM_VGEM n
     CPU_FREQ_GOV_INTERACTIVE n
     # ARM only
-    CPUFREQ_DT n
-    EXTCON_CROS_EC n
-    DRM_POWERVR_ROGUE n
+    CPUFREQ_DT? n #3.14
+    EXTCON_CROS_EC? n #3.14
+    DRM_POWERVR_ROGUE? n #3.14
     # Disabled in Google config
     INPUT_KEYRESET n
     DM_BOOTCACHE n
     UID_CPUTIME n
+
+    DVB_USB_DIB0700 n
+    DVB_USB_DW2102 n
+    DVB_USB_PCTV452E n
+    DVB_USB_TTUSB2 n
+    DVB_USB_AF9015 n
+    DVB_USB_AF9035 n
+    DVB_USB_ANYSEE n
+    DVB_USB_AZ6007 n
+    DVB_USB_IT913X n
+    DVB_USB_LME2510 n
+    DVB_USB_RTL28XXU n
+    USB_S2255 n
+    VIDEO_EM28XX n
+    VIDEO_TM6000 n
+
+    USB_DWC2 n
+    USB_ETH_RNDIS n
+    USB_G_MULTI_RNDIS n
+    USB_GSPCA n
+    # GSPCA_ZC3XX y  
+    # GSPCA_TOPRO y
+    # GSPCA_SN9C20X y
+    # GSPCA_OV519 y
+    # GSPCA_MAIN y
+    # GSPCA_JEILINJ y
+
+    SPEAKUP n
+    XO15_EBOOK n
   ''}
 
   ${kernelPlatform.kernelExtraConfig or ""}
