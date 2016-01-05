@@ -10037,10 +10037,15 @@ let
       ];
   };
 
-  linux_chromiumos_3_14 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.14.nix {};
+  linux_chromiumos_3_14 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.14.nix {
+    kernelPatches = [ kernelPatches.chromiumos_Kconfig_fix_entries
+                      kernelPatches.chromiumos_mfd_fix_dependency 
+                      kernelPatches.genksyms_fix_segfault
+                    ];
+  };
 
   linux_chromiumos_3_18 = callPackage ../os-specific/linux/kernel/linux-chromiumos-3.18.nix {
-    kernelPatches = [ kernelPatches.chromiumos_kconfig
+    kernelPatches = [ kernelPatches.chromiumos_Kconfig_fix_entries_1
                       kernelPatches.chromiumos_no_link_restrictions
                       kernelPatches.genksyms_fix_segfault
                     ];

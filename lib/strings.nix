@@ -180,9 +180,14 @@ rec {
   # Return true iff string v1 denotes a version older than v2.
   versionOlder = v1: v2: builtins.compareVersions v2 v1 == 1;
 
+  # Return true iff string v1 denotes a version newer than v2.
+  versionNewer = v1: v2: builtins.compareVersions v2 v1 == -1;
 
   # Return true iff string v1 denotes a version equal to or newer than v2.
   versionAtLeast = v1: v2: !versionOlder v1 v2;
+
+  # Return true iff string v1 denotes a version equal to or older than v2.
+  versionAtMost = v1: v2: !versionNewer v1 v2;
 
 
   # Get the version of the specified derivation, as specified in its

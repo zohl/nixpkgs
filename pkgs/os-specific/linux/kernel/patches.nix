@@ -108,14 +108,24 @@ rec {
       patch = ./genksyms-fix-segfault.patch;
     };
 
-  chromiumos_kconfig =
-    { name = "chromium_kconfig";
-      patch = ./chromiumos-patches/chromiumos-kconfig.patch;
+
+  chromiumos_Kconfig_fix_entries_1 =
+    { name = "Kconfig_fix_entries_1";
+      patch = ./chromiumos-patches/fix-double-Kconfig-entry-1.patch;
     };
 
-  chromiumos_no_link_restrictions =
-    { name = "chromium-no-link-restrictions";
-      patch = ./chromiumos-patches/no-link-restrictions.patch;
+  chromiumos_Kconfig_fix_entries =
+    { name = "Kconfig_fix_entries";
+      patch = ./chromiumos-patches/fix-double-Kconfig-entry.patch;
     };
 
+  chromiumos_mfd_fix_dependency =
+    { name = "mfd_fix_dependency";
+      patch = ./chromiumos-patches/mfd-fix-dependency.patch;
+    };
+
+   chromiumos_no_link_restrictions =
+     { name = "chromium-no-link-restrictions";
+       patch = ./chromiumos-patches/no-link-restrictions.patch;
+     };
 }

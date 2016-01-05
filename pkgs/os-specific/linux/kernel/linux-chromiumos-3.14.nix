@@ -5,9 +5,9 @@ import ./generic.nix (args // rec {
   extraMeta.branch = "3.14";
 
   src = fetchgit {
-    url = "git://abbradar.net/linux";
-    rev = "f7c35184632c40ee6f8e6515bc27cac815dc0363";
-    sha256 = "d9d4f78ac0cc966cbfd10a7a2a0af5587bcfafc73676714a3b441b706115fecb";
+    url = "https://chromium.googlesource.com/chromiumos/third_party/kernel";
+    rev = "63a768b40c91c6f3518ea1f20d0cb664ed4e6a57";
+    sha256 = "613527a032699be32c18d3f5d8d4c215d7718279a1c372c9f371d4e6c0b9cc34";
   };
 
   features.iwlwifi = true;
