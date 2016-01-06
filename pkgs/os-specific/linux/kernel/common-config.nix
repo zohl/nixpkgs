@@ -501,7 +501,6 @@ with stdenv.lib;
 
   # ChromiumOS support
   ${optionalString (features.chromiumos or false) ''
-
     CHROME_PLATFORMS y
     VGA_SWITCHEROO n
     MMC_SDHCI_PXAV2 n
@@ -527,16 +526,18 @@ with stdenv.lib;
     DM_BOOTCACHE n
     UID_CPUTIME n
 
-    CPUFREQ_DT? n
-    EXTCON_CROS_EC? n
-    DRM_POWERVR_ROGUE? n
-    CHROMEOS_OF_FIRMWARE? y
-    TEST_RHASHTABLE? n
-    BCMDHD? n
-    TRUSTY? n
+    ${optionalString (versionAtLeast version "3.18") ''
+      CPUFREQ_DT n
+      EXTCON_CROS_EC n
+      DRM_POWERVR_ROGUE n
+      CHROMEOS_OF_FIRMWARE y
+      TEST_RHASHTABLE n
+      BCMDHD n
+      TRUSTY n
+    ''}
 
-    ${optionalString (versionAtMost version "3.14.56") ''
-      MALI_MIDGARD? n
+    ${optionalString (versionOlder version "3.18") ''
+      MALI_MIDGARD n
       DVB_USB_DIB0700 n
       DVB_USB_DW2102 n
       DVB_USB_PCTV452E n
@@ -552,11 +553,10 @@ with stdenv.lib;
       VIDEO_EM28XX n
       VIDEO_TM6000 n
       USB_DWC2 n
-      USB_ETH_RNDIS n
-      USB_G_MULTI_RNDIS n
       USB_GSPCA n
       SPEAKUP n
       XO15_EBOOK n
+      USB_GADGET n
     ''}
   ''}
 
